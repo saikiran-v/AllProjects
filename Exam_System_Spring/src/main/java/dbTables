@@ -1,0 +1,4 @@
+
+create table studentDetails(studentId int IDENTITY ,StudentName varchar(30),admissionId int  primary key(studentId) )
+create table examiner(studentid int primary key ,result varchar(20) ,FOREIGN KEY(studentid) REFERENCES studentDetails(studentId))
+create table student_subjects(subjectId int primary key ,subjectName varchar(20) ,student_Id integer , FOREIGN KEY(student_Id) REFERENCES studentDetails(studentId))

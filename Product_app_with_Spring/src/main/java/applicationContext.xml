@@ -1,0 +1,30 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+	<bean id="dao" class="com.pennat.prod.dao.ProductDaoImpl">
+		<property name="jdbc" ref="jdbcT" />
+	</bean>
+	<bean id="service" class="com.pennat.prod.service.ProductServiceImpl">
+		<property name="prodDao" ref="dao"></property>
+	</bean>
+
+	<bean id="" class="com.ProductTest">
+		<constructor-arg name="prodService" ref="service"></constructor-arg>
+	</bean>
+
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
+		<property name="url"
+			value="jdbc:sqlserver://192.168.1.145:1433;databaseName=training2018" />
+		<property name="username" value="pennant" />
+		<property name="password" value="zxcvbn1@" />
+	</bean>
+	<bean id="jdbcT" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+
+</beans>

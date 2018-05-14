@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+	<bean id="student" class="com.Student" scope="prototype">
+		<property name="registrar" ref="registrar"></property>
+		<property name="examRegistrar" ref="ExamRegistrar"></property>
+	</bean>
+
+	<bean id="registrar" class="com.registration.Registrar" scope="singleton">
+		<property name="validator" ref="validator"></property>
+	</bean>
+
+	<bean id="ExamRegistrar" class="com.examination.ExamRegistrar"
+		scope="singleton">
+		<property name="studentDao" ref="dao"></property>
+		<property name="exam" ref="exam"></property>
+	</bean>
+
+
+
+	<bean id="exam" class="com.examination.Exam" scope="prototype">
+		<constructor-arg name="paper" ref="paper"></constructor-arg>
+	</bean>
+
+
+	<bean id="paper" class="com.examination.Paper" scope="prototype">
+		<property name="evaluator" ref="evaluator"></property>
+	</bean>
+	<bean id="validator" class="com.registration.Validator">
+		<property name="studentDao" ref="dao"></property>
+	</bean>
+	<bean id="evaluator" class="com.examination.Evaluator"></bean>
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
+		<property name="url"
+			value="jdbc:sqlserver://192.168.1.145:1433;databaseName=training2018" />
+		<property name="username" value="pennant" />
+		<property name="password" value="zxcvbn1@" />
+	</bean>
+	<bean id="jdbcT" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	<bean id="dao" class="com.dao.StudentDaoImpl">
+		<property name="jdbc" ref="jdbcT"></property>
+	</bean>
+
+</beans>
